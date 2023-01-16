@@ -1,0 +1,168 @@
+*,
+*:before,
+*::after {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(14px, 2vw, 20px);
+}
+
+.nav-inner {
+  background-color: rgb(31, 31, 31);
+  display: flex;
+  justify-content: space-between;
+}
+.logo img {
+  width: 15vw;
+}
+
+.logo {
+  padding: 10px;
+}
+
+.menu {
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+}
+
+.menu li {
+  padding: 10px;
+  list-style: none;
+}
+
+.menu a {
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: white;
+  transition: all 200ms ease;
+}
+
+.menu a:hover {
+  color: rgb(194, 194, 194);
+}
+
+.hero {
+  width: 100%;
+}
+
+.hero img {
+  width: 100%;
+}
+
+.modal {
+  background-color: white;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 30%;
+  height: 30%;
+  position: relative;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+}
+.modal h2 {
+  text-align: center;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.modal label {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.modal-bg {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  transition: all 250ms ease;
+}
+
+.close:hover {
+  color: red;
+  cursor: pointer;
+}
+
+.bg-active {
+  animation: fadeIn 250ms ease;
+  animation-fill-mode: forwards;
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal-active {
+  animation: fadeInSlideDown 200ms ease;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes fadeInSlideDown {
+  from {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0px);
+  }
+}
+
+/* make bg fade in */
+/* make modal slide down */
+
+.subscribe-section {
+  width: 100%;
+  background-color: rgb(104, 104, 104);
+  display: flex;
+  justify-content: center;
+}
+.subscribe-section-inner {
+  max-width: 70%;
+  padding: 30px;
+}
