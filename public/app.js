@@ -17,6 +17,7 @@ modalBtn.addEventListener("click", () => {
 closeBtn.addEventListener("click", () => {
   modalBg.classList.remove("bg-active");
   modal.classList.remove("modal-active");
+  clearForm();
 });
 
 subscribeBtn.addEventListener("click", (e) => {
@@ -24,14 +25,16 @@ subscribeBtn.addEventListener("click", (e) => {
   sendFormData();
 });
 
-let messageAppended = false;
-
 // need to do some form validation before letting the
 // sendFormData function get called
+function clearForm() {
+  fullName.value = "";
+  email.value = "";
+}
+
+let messageAppended = false;
 
 function sendFormData() {
-  // const formData = new FormData(myForm);
-
   if (!messageAppended) {
     fetch("/submitForm", {
       method: "POST",
@@ -43,9 +46,9 @@ function sendFormData() {
         email: email.value,
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+      // .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
         resMsg.innerHTML = "Form submitted successfully";
         resMsg.classList.add("active");
         document.querySelector("#myForm").appendChild(resMsg);
@@ -55,8 +58,7 @@ function sendFormData() {
         let messageTimeout = setTimeout(() => {
           resMsg.classList.remove("active");
           messageAppended = false;
-          fullName.value = "";
-          email.value = "";
+          clearForm();
         }, 5000);
       })
       .catch((error) => console.log(error));
