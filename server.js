@@ -24,13 +24,12 @@ app.get("/", (req, res) => {
 
 app.post("/submitForm", (req, res) => {
   // Do something with the form data
-  const { name, email } = req.body;
-  console.log(name, email);
-  // Prepare the updated data
-  const updatedData = `Hello, ${name}!`;
-  // Send the updated data back to the client
-  //   res.send(updatedData);
-  res.status(200).send(updatedData);
+  let { name, email } = req.body;
+
+  name = `Your name is: ${name}`;
+
+  const data = { name, email };
+  res.status(200).json(data);
 });
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));

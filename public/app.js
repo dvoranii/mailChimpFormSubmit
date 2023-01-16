@@ -7,6 +7,8 @@ const email = document.querySelector(".email");
 const subscribeBtn = document.querySelector(".subscribe-btn");
 const myForm = document.getElementById("myForm");
 
+let resMsg = document.querySelector(".response-message");
+
 modalBtn.addEventListener("click", () => {
   modalBg.classList.add("bg-active");
   modal.classList.add("modal-active");
@@ -22,28 +24,53 @@ subscribeBtn.addEventListener("click", (e) => {
   sendFormData();
 });
 
+let messageAppended = false;
+
 function sendFormData() {
   // const formData = new FormData(myForm);
 
-  fetch("/submitForm", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: fullName.value,
-      email: email.value,
-    }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        // Create a new element to hold the success message
-        let message = document.createElement("p");
-        message.innerHTML = "Form submitted successfully";
-        message.classList.add("success-message");
-        // Append the message to the DOM
-        document.querySelector("#myForm").appendChild(message);
-      }
+  if (!messageAppended) {
+    fetch("/submitForm", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: fullName.value,
+        email: email.value,
+      }),
     })
-    .catch((error) => console.log(error));
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        resMsg.innerHTML = `${data.name}`;
+        resMsg.classList.add("active");
+        document.querySelector("#myForm").appendChild(resMsg);
+
+        messageAppended = true;
+
+        let messageTimeout = setTimeout(() => {
+          resMsg.classList.remove("active");
+          messageAppended = false;
+          fullName.value = "";
+          email.value = "";
+        }, 5000);
+      })
+      // .then((res) => {
+      //   if (res.ok) {
+      // resMsg.innerHTML = "Form submitted successfully";
+      // resMsg.classList.add("active");
+      // document.querySelector("#myForm").appendChild(resMsg);
+      //     messageAppended = true;
+
+      //     let messageTimeout = setTimeout(() => {
+      //       resMsg.classList.remove("active");
+      //       messageAppended = false;
+      //       fullName.value = "";
+      //       email.value = "";
+      //     }, 5000);
+      //   }
+      // })
+      .catch((error) => console.log(error));
+  }
 }

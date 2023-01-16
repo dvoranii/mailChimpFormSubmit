@@ -166,3 +166,11 @@ p {
   max-width: 70%;
   padding: 30px;
 }
+
+.response-message {
+  display: none;
+}
+
+.response-message.active {
+  display: block;
+}
