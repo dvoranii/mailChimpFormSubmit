@@ -26,6 +26,9 @@ subscribeBtn.addEventListener("click", (e) => {
 
 let messageAppended = false;
 
+// need to do some form validation before letting the
+// sendFormData function get called
+
 function sendFormData() {
   // const formData = new FormData(myForm);
 
@@ -43,7 +46,7 @@ function sendFormData() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        resMsg.innerHTML = `${data.name}`;
+        resMsg.innerHTML = "Form submitted successfully";
         resMsg.classList.add("active");
         document.querySelector("#myForm").appendChild(resMsg);
 
@@ -56,21 +59,6 @@ function sendFormData() {
           email.value = "";
         }, 5000);
       })
-      // .then((res) => {
-      //   if (res.ok) {
-      // resMsg.innerHTML = "Form submitted successfully";
-      // resMsg.classList.add("active");
-      // document.querySelector("#myForm").appendChild(resMsg);
-      //     messageAppended = true;
-
-      //     let messageTimeout = setTimeout(() => {
-      //       resMsg.classList.remove("active");
-      //       messageAppended = false;
-      //       fullName.value = "";
-      //       email.value = "";
-      //     }, 5000);
-      //   }
-      // })
       .catch((error) => console.log(error));
   }
 }

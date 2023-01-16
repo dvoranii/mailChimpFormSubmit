@@ -25,7 +25,9 @@ app.get("/", (req, res) => {
 app.post("/submitForm", (req, res) => {
   // Do something with the form data
   let { name, email } = req.body;
-
+  console.log(name, email);
+  //   variable mutated, this is just for practice
+  // let's implement mailchimp and firebase on this
   name = `Your name is: ${name}`;
 
   const data = { name, email };

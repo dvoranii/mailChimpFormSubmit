@@ -169,6 +169,9 @@ p {
 
 .response-message {
   display: none;
+  font-family: Arial, Helvetica, sans-serif;
+  color: green;
+  text-align: center;
 }
 
 .response-message.active {
