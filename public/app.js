@@ -25,20 +25,36 @@ subscribeBtn.addEventListener("click", (e) => {
   sendFormData();
 });
 
-// need to do some form validation before letting the
-// sendFormData function get called
 function clearForm() {
   fullName.value = "";
   email.value = "";
+  resMsg.innerHTML = "";
+  subscribeBtn.removeAttribute("disabled");
 }
 
 let messageAppended = false;
 
+function checkFormValidity() {
+  let emailRegEx = /^[^@]+@[^\.]+(\.[^\.]+)+$/;
+
+  if (!emailRegEx.test(email.value)) {
+    appendResMsgToForm(resMsg, "Please enter a valid email address", "red");
+  }
+
+  if (!fullName.value || !email.value) {
+    subscribeBtn.setAttribute("disabled", true);
+  } else {
+    subscribeBtn.removeAttribute("disabled");
+  }
+}
+
+fullName.addEventListener("input", checkFormValidity);
+email.addEventListener("input", checkFormValidity);
+
 async function sendFormData() {
   if (!messageAppended) {
-    let emailRegEx = /^[^@]+@[^\.]+(\.[^\.]+)+$/;
-    if (!emailRegEx.test(email.value)) {
-      appendResMsgToForm(resMsg, "Please enter a valid email address", "red");
+    checkFormValidity();
+    if (subscribeBtn.hasAttribute("disabled")) {
       return;
     }
     try {
