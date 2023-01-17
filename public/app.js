@@ -34,33 +34,54 @@ function clearForm() {
 
 let messageAppended = false;
 
-function sendFormData() {
+async function sendFormData() {
   if (!messageAppended) {
-    fetch("/submitForm", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: fullName.value,
-        email: email.value,
-      }),
-    })
-      // .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        resMsg.innerHTML = "Form submitted successfully";
-        resMsg.classList.add("active");
-        document.querySelector("#myForm").appendChild(resMsg);
-
-        messageAppended = true;
-
-        let messageTimeout = setTimeout(() => {
-          resMsg.classList.remove("active");
-          messageAppended = false;
-          clearForm();
-        }, 5000);
-      })
-      .catch((error) => console.log(error));
+    let emailRegEx = /^[^@]+@[^\.]+(\.[^\.]+)+$/;
+    if (!emailRegEx.test(email.value)) {
+      appendResMsgToForm(resMsg, "Please enter a valid email address", "red");
+      return;
+    }
+    try {
+      let res = await fetch("/submitForm", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: fullName.value,
+          email: email.value,
+        }),
+      });
+      displayResponseMessage(res);
+    } catch (error) {
+      console.log(error);
+    }
   }
+}
+
+function displayResponseMessage(res) {
+  if (res.status === 200) {
+    console.log(res);
+    appendResMsgToForm(resMsg, "Form submitted successfully", "green");
+    messageAppended = true;
+    let messageTimeout = setTimeout(() => {
+      resMsg.classList.remove("active");
+      messageAppended = false;
+      // clearForm();
+    }, 5000);
+  } else if (res.status === 500) {
+    console.log(res);
+    appendResMsgToForm(
+      resMsg,
+      "User already exists. Please try another email address.",
+      "red"
+    );
+  }
+}
+
+function appendResMsgToForm(resMsg, message, color) {
+  resMsg.innerHTML = message;
+  resMsg.style.color = color;
+  resMsg.classList.add("active");
+  document.querySelector("#myForm").appendChild(resMsg);
 }

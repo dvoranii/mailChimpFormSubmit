@@ -30,10 +30,6 @@ app.get("/", (req, res) => {
 
 app.post("/submitForm", (req, res) => {
   let { name, email } = req.body;
-
-  //   const data = { name, email };
-  //   res.status(200).send(data);
-
   let defaultClient = SibApiV3Sdk.ApiClient.instance;
   let apiKey = defaultClient.authentications["api-key"];
   apiKey.apiKey = sibAPIKey;
@@ -43,7 +39,10 @@ app.post("/submitForm", (req, res) => {
   createContact.email = email;
   createContact.listIds = [2];
 
-  //   call SIB api
+  createContact.attributes = {
+    FIRSTNAME: name,
+  };
+
   apiInstance.createContact(createContact).then(
     (data) => {
       res.status(200);
