@@ -33,7 +33,6 @@ function clearForm() {
 }
 
 let messageAppended = false;
-
 let isFormSubmitting = false;
 
 function checkFormValidity() {
@@ -59,7 +58,9 @@ function checkFormValidity() {
 }
 
 fullName.addEventListener("input", checkFormValidity);
-email.addEventListener("input", checkFormValidity);
+email.addEventListener("input", () => {
+  checkFormValidity();
+});
 
 subscribeBtn.addEventListener("click", function (e) {
   e.preventDefault();
